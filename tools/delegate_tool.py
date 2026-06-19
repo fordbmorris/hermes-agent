@@ -990,6 +990,8 @@ def _build_child_agent(
     # 'leaf' (default) cannot; 'orchestrator' retains the delegation
     # toolset subject to depth/kill-switch bounds applied below.
     role: str = "leaf",
+    # Per-task reasoning effort override; None means inherit as normal.
+    reasoning_effort: Optional[str] = None,
 ):
     """
     Build a child AIAgent on the main thread (thread-safe construction).
@@ -1161,9 +1163,23 @@ def _build_child_agent(
         effective_provider = "copilot-acp"
         effective_api_mode = "chat_completions"
 
-    # Resolve reasoning config: delegation override > parent inherit
+    # Resolve reasoning config: per-task override > delegation config > parent inherit
     parent_reasoning = getattr(parent_agent, "reasoning_config", None)
     child_reasoning = parent_reasoning
+
+    # Per-task override takes priority
+    if reasoning_effort:
+        from hermes_constants import parse_reasoning_effort
+
+        parsed = parse_reasoning_effort(reasoning_effort)
+        if parsed is not None:
+            child_reasoning = parsed
+        else:
+            logger.warning(
+                "Unknown per-task reasoning_effort '%s', inheriting parent level",
+                reasoning_effort,
+            )
+
     try:
         delegation_effort = str(delegation_cfg.get("reasoning_effort") or "").strip()
         if delegation_effort:
@@ -2072,6 +2088,7 @@ def delegate_task(
     acp_args: Optional[List[str]] = None,
     role: Optional[str] = None,
     background: Optional[bool] = None,
+    reasoning_effort: Optional[str] = None,
     parent_agent=None,
 ) -> str:
     """
@@ -2079,12 +2096,17 @@ def delegate_task(
 
     Supports two modes:
       - Single: provide goal (+ optional context, toolsets, role)
-      - Batch:  provide tasks array [{goal, context, toolsets, role}, ...]
+      - Batch:  provide tasks array [{goal, context, toolsets, role, reasoning_effort}, ...]
 
     The 'role' parameter controls whether a child can further delegate:
     'leaf' (default) cannot; 'orchestrator' retains the delegation
     toolset and can spawn its own workers, bounded by
     delegation.max_spawn_depth.  Per-task role beats the top-level one.
+
+    The 'reasoning_effort' parameter controls per-subagent reasoning level.
+    Per-task value beats the top-level one.  If set, it is passed to the
+    child's reasoning config, overriding delegation.reasoning_effort (if any)
+    and the parent's inherited level.  Accepted values: 'low', 'medium', 'high'.
 
     Returns JSON with results array, one entry per task.
     """
@@ -2179,7 +2201,7 @@ def delegate_task(
         task_list = tasks
     elif goal and isinstance(goal, str) and goal.strip():
         task_list = [
-            {"goal": goal, "context": context, "toolsets": toolsets, "role": top_role}
+            {"goal": goal, "context": context, "toolsets": toolsets, "role": top_role, "reasoning_effort": reasoning_effort}
         ]
     else:
         return tool_error("Provide either 'goal' (single task) or 'tasks' (batch).")
@@ -2242,6 +2264,7 @@ def delegate_task(
                     else (acp_args if acp_args is not None else creds.get("args"))
                 ),
                 role=effective_role,
+                reasoning_effort=t.get("reasoning_effort"),
             )
             # Override with correct parent tool names (before child construction mutated global)
             child._delegate_saved_tool_names = _parent_tool_names

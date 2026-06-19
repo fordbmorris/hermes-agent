@@ -141,9 +141,31 @@ class ProviderProfile:
         extra_body (OpenRouter: extra_body.reasoning) while others put it
         as top-level api_kwargs (Kimi: api_kwargs.reasoning_effort).
 
-        Default: ({}, {}).
+        Default: translates reasoning_config to extra_body reasoning + thinking.
         """
-        return {}, {}
+        extra_body: dict[str, Any] = {}
+        top_level: dict[str, Any] = {}
+
+        if reasoning_config and isinstance(reasoning_config, dict):
+            enabled = reasoning_config.get("enabled", True)
+            effort = str(reasoning_config.get("effort", "") or "").strip().lower()
+
+            # Set thinking type based on enabled state
+            extra_body["thinking"] = {
+                "type": "enabled" if enabled else "disabled",
+            }
+
+            # Set reasoning object
+            reasoning_obj: dict[str, Any] = {"enabled": enabled}
+            if enabled and effort and effort != "none":
+                reasoning_obj["effort"] = effort
+            extra_body["reasoning"] = reasoning_obj
+
+            # For disabled or none, add chat_template_kwargs for vLLM compatibility
+            if not enabled or effort == "none":
+                extra_body["chat_template_kwargs"] = {"reasoning_effort": "none"}
+
+        return extra_body, top_level
 
     def get_max_tokens(self, model: str | None) -> int | None:
         """Return the default max_tokens cap for *model*.
