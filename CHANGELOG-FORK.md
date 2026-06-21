@@ -31,3 +31,271 @@
   - `36851fa57` fix(docker): support WebUI installs from read-only sources (#48541)
   - `d573e7c9e` fix(dashboard): use DS Button prefix/size API instead of inline icons
 - **Tests:** All fork tests passed
+
+### [2026-06-21] Merged upstream/main (263 commits)
+- **Status:** ✅ Merged and tested
+- **Upstream commits:**
+  - `2f3177adf fix(compression): protect the summary call from mid-flight interrupts`
+  - `4b7f9a4d3 test(matrix): make voice-detection tests hermetic against mention gating (#49946)`
+  - `4c349e85f fix(gateway): preserve transcript when hygiene auto-compress can't rotate`
+  - `79f297834 fix(gateway): widen cron namespace-collision fix to all migrated adapters`
+  - `4c206b972 fix(gateway): correct sys.path insertion in plugins to prevent cron namespace collision (#49410)`
+  - `e5e173eef chore(release): add AUTHOR_MAP entries for docs PR salvage cluster`
+  - `5d0541529 Expand .gitignore example`
+  - `094d9cba6 Update docs to clarify requirement for gitignore`
+  - `a9602d27e docs(skill): document context_length auto-detection resolution chain`
+  - `abfbd618b fix(docs): regenerate skill docs to fix stale cross-links, add tool-search to sidebar`
+  - `e1a717a6d docs: add Open Scaffold MCP workflow`
+  - `f6275a59e docs(contributing): add "search first" guidance to cut duplicate PRs`
+  - `9e4348f28 docs(windows): document uv.exe AV false positive`
+  - `2b08a4295 docs(README.zh-CN): update Windows install from 'not supported' to native PowerShell`
+  - `31bdb6001 docs(skills): fix himalaya CLI arg order and download flag`
+  - `4711936a3 fix(docs): remove non-existent conversation_entity setting from homeassistant troubleshooting`
+  - `7ace96ba4 fix(compression): preserve goal, platform, and session indexing across rotation`
+  - `b4b512c50 test(gateway): assert queued outcome, not merge_pending_message_event call`
+  - `c11c510b4 fix(gateway): FIFO busy-mode text follow-ups instead of newline-merging them`
+  - `170ef24c8 fix(doctor): audit WhatsApp bridge at its resolved (HERMES_HOME) dir (#49890)`
+  - `67523fae7 test(web_server): make profile-wrapper alias test OS-aware`
+  - `15cfc2836 fix(kanban): anchor no-path worktree tasks on board default_workdir`
+  - `d79f67fda fix(kanban): materialize and reuse linked worktrees for worktree tasks`
+  - `37fa3c58b docs(kanban-worker): document kanban_complete artifacts deliverable param (#49854)`
+  - `2213ea9fa test(whatsapp): cover read-only bridge dir mirror; add author map`
+  - `491579fa0 fix(whatsapp): resolve bridge dir with HERMES_HOME mirror in Docker`
+  - `0a2b71296 test(chat-completions): cover timestamp strip + add AUTHOR_MAP entry`
+  - `4467c22c8 fix(chat-completions): strip timestamp from messages before sending to strict providers`
+  - `ac83365d9 fix(install): expand 8.3 short %TEMP% so Windows Node/Electron stages don't abort`
+  - `e74033b39 test(install): add ConvertTo-LongPath helper for 8.3 short paths`
+  - `5a53e0f0f fix(compression): abort on auth failure instead of rotating into a degraded session`
+  - `f22dd8a75 fix(agent): fail over to fallback provider on persistent auth failure (401/403)`
+  - `ea8a8b4af feat(delegation): background fan-out — parallel subagents, one consolidated return (#49734)`
+  - `680732c10 fix(gateway): never interrupt a busy session with an internal completion event (#49738)`
+  - `69716a2e6 docs(compression): fix stale 'discarded' wording on in_place config flag`
+  - `854d75723 fix(compression): keep compaction-archived turns discoverable in session_search`
+  - `466345699 fix(compression): in-place compaction is non-destructive (soft-archive, not delete)`
+  - `4f9485a95 refactor(compression): tidy in-place compaction path (simplify pass)`
+  - `1fbf48d4a fix(compression): make in-place compaction durable + rotation-independent end-to-end`
+  - `47fadc24d feat(compression): in-place compaction option that keeps one session id (#38763)`
+  - `37a4dd498 fix(auth): heal poisoned Nous inference URL on refresh instead of retaining it`
+  - `92d40c255 chore(release): add IamSanchoPanza to AUTHOR_MAP`
+  - `c884ff64e fix(agent): keep system-prompt model identity in sync across provider failover`
+  - `11c6f4c7b feat(setup): Blank Slate setup mode — minimal agent, opt in to everything (#36733)`
+  - `838daca9f chore(desktop): format tooltip indentation + author map for #49697`
+  - `404fe730b fix: add tooltips to right sidebar header buttons`
+  - `c32927948 test: retarget source-path refs to migrated plugin paths`
+  - `560010547 refactor(gateway): migrate slack/dingtalk/whatsapp/matrix/feishu/telegram/wecom/email/sms adapters to bundled plugins`
+  - `2ab09a6c5 Merge pull request #49680 from NousResearch/fix/signal-quote-cache-eviction`
+  - `26d9a3c71 fix(signal): FIFO-evict the quote-detection timestamp cache`
+  - `85ad7c9b0 Merge pull request #49678 from NousResearch/salvage/signal-echo-ring`
+  - `e49272fe5 chore(release): map w31rdm4ch1nZ contributor email to GitHub login`
+  - `2f8628321 test(signal): update echo-discard test for OrderedDict ring`
+  - `332f88f6a fix(signal): harden recently-sent echo ring with LRU + TTL`
+  - `b88d0007c Merge pull request #49583 from NousResearch/salvage/signal-mention-typing`
+  - `32a97a20a fix(signal): strip self-mention in all groups, not just require_mention`
+  - `ef7e71693 chore(release): map rratmansky contributor email to GitHub login`
+  - `40b6ac9ac fix(signal): send explicit stop-typing RPC when cancelling indicator`
+  - `96b10327b fix(signal): strip bot self-mention from group messages before agent dispatch`
+  - `65561e9de Merge pull request #49563 from NousResearch/salvage/signal-quote-history`
+  - `96db7c688 fix(signal): preserve quoted reply context`
+  - `ff50a8861 Merge pull request #49558 from NousResearch/salvage/env-var-guards-48735`
+  - `834bbae89 Merge pull request #49530 from NousResearch/salvage/signal-trio`
+  - `467c879b2 chore(release): map lkz-de contributor email to GitHub login`
+  - `a7dd98c86 fix(env): guard remaining malformed int/float env var casts with utils helpers`
+  - `7eb9678c5 test(desktop): cover link-title window audio muting`
+  - `ae8db1ab5 fix(desktop): mute hidden link-title window so historical links don't autoplay audio`
+  - `abafba076 refactor(signal): correct STT-fallback comment, type the markdown wrapper, make AAC test portable`
+  - `06ca1e998 fix(utils): add env_float helper for safe float env var parsing`
+  - `da34fca2b fix(signal): detect ADTS AAC voice notes and remux to MP4`
+  - `905820b59 fix(signal): share markdown formatting across send paths`
+  - `15852722d feat(desktop): pop the composer out into a draggable floating window (#49488)`
+  - `eed78d6eb fix(desktop): composer popout polish — peel-off placement, panels, chip editing`
+  - `a6f08ff0c docs(delegate): clarify subagent model is config-level, not per-call`
+  - `f697c97e0 fix(desktop): keep floating composer radius consistent with docked`
+  - `236f0597e feat(desktop): pop the composer out into a draggable floating window`
+  - `c253b0738 fix(model): clear stale endpoint credentials across switches`
+  - `95a3affc2 fix(model): keep Nous picker from restoring stale custom keys`
+  - `1b7b4d138 fix(desktop): handle slash exec dispatch payloads (#49358)`
+  - `857d0244a fix(tui): handle dispatch payloads from slash exec (#49337)`
+  - `cf58f1a52 feat(titles): support language-aware title generation (#45296)`
+  - `8cf7df867 fix(plugins): silence raft check_fn log spam for users without raft CLI`
+  - `75ed07ace fix(gateway): break the restart loop at the source on session resume`
+  - `6504f51cd chore: add @hakanpak to AUTHOR_MAP for PR #49282 salvage`
+  - `d45addc2f fix(tools): never let a model whitelist strip the prompt / source images`
+  - `8ebe37f6a feat(desktop): notify renderer when GPU acceleration is disabled due to remote display`
+  - `64b21e50f fix(cli): publish agent ref to cli module so memory on_session_end fires on exit`
+  - `013f9c875 fix(memory): log CLI shutdown hook failures`
+  - `c1a0b6a5f style: strip trailing whitespace in cron scheduler live-adapter block`
+  - `3a6c171e9 fix(gateway): log signal transport response and bubble cron live adapter errors`
+  - `5649b8649 Fix silent delivery failures in Signal live adapter (#49260)`
+  - `5f55f0ff8 feat(teams): native send_video/send_voice/send_document attachments (#49308)`
+  - `1e40b21b2 docs: clean up three stale comments from the #32848 audit (#45638)`
+  - `d799284b1 feat(optional-skills/creative-ideation): expand to v2.1.0 method library (#42402)`
+  - `a7983d5ad fix(dashboard): hide sidecar sessions from history (#49269)`
+  - `1a0ef1311 Merge pull request #49264 from kshitijk4poor/salvage-picker-persist-49176`
+  - `2099c7b53 test(gateway): make picker-persist tests hermetic and parametrized`
+  - `10fea06c1 test(gateway): cover inline-keyboard model-picker persistence`
+  - `2fe78d1ae fix(gateway): persist inline-keyboard model-picker selections by default`
+  - `01f581d8d Merge pull request #49254 from kshitijk4poor/salvage-windows-managed-node-49239`
+  - `d4e7dd609 refactor(windows): tidy managed-node resolver helpers`
+  - `fcc169057 fix(windows): prefer managed npm for hermes update desktop-rebuild gate`
+  - `7a7b56d49 fix(windows): prefer managed node for whatsapp and desktop`
+  - `38f1a923a fix(gateway): rename the Telegram topic from /title, not only auto-titles`
+  - `866f1d65c chore(desktop): sync package.json version fallback to 0.17.0 (#49236)`
+  - `2bd1977d8 chore: release v0.17.0 (2026.6.19)`
+  - `40722058e fix(mcp): keep short-TTL HTTP sessions alive with configurable ping keepalive`
+  - `4c5217b71 Merge pull request #49207 from kshitijk4poor/fix/cron-script-env-sanitize`
+  - `ba49fb51a fix(discord): hydrate channel context when replying to a message (#49212)`
+  - `f06508836 docs(security): enumerate cron job scripts in §2.3 credential scoping`
+  - `8dc0b1889 refactor(cron): copy os.environ before sanitizing for subprocess`
+  - `16642e276 fix(mcp): revert ACP rebuild to original; harden generation guard`
+  - `f3e967aae fix(mcp): round-3 polish — generation capture adjacency + gateway contract note`
+  - `88d523220 fix(mcp): address adversarial review round 2 (stale-publish race, parity holes)`
+  - `b6e2a54a9 fix(mcp): address adversarial review round 1 (cache parity, gates, races)`
+  - `371348387 fix(mcp): refresh agent tool snapshot between turns (cache-safe late-binding)`
+  - `93d6e7302 fix(mcp): expose late-connecting MCP tools to the agent (TUI/CLI/gateway)`
+  - `2d978bf44 test(cron): make env-sanitize probe var deterministic`
+  - `746c46d61 chore: add lgalabru to AUTHOR_MAP for PR #43112 salvage`
+  - `239740a19 feat(tools): MCP elicitation handler with gateway-aware approval routing`
+  - `da7253215 fix(cron): sanitize env for job script subprocesses`
+  - `26e76a75e feat(telegram): opt-in Online/Offline bot status indicator (#49134)`
+  - `990273d90 fix(agent): accept pixel-correct image downscale when bytes grow (#48013)`
+  - `ac00e7368 feat(dashboard): add a reasoning-effort picker to the chat sidebar (#49141)`
+  - `c06898098 fix(cli): clear viewport on width-change resize so the status bar can't duplicate (#49120)`
+  - `b266ad748 chore(deps): npm audit fix — bump transitive undici to clear advisories (#49113)`
+  - `0e8b76532 fix(desktop): rename "Restart messaging" → "Restart gateway", surface restarts in the statusbar, make logs selectable (#49094)`
+  - `929dbf777 fix(desktop): make rendered logs selectable so they can be copied`
+  - `a1639921a fix(desktop): offer a Restart gateway action on messaging save/toggle toasts`
+  - `553cf4f97 feat(desktop): restart the gateway from Cmd+K, with statusbar spinner feedback`
+  - `6308d3416 fix(desktop): rename "Restart messaging" -> "Restart gateway"`
+  - `0d7abd555 fix(dashboard): sort chat session switcher by most-recent activity (#49104)`
+  - `1b04e4ede fix(cli): status bar no longer stays hidden after resize during idle (#49105)`
+  - `7d86178cf fix(raft): set stdin=DEVNULL on bridge subprocess`
+  - `22ccb12c3 chore(release): map skyzh@mail.build to xxchan for Raft salvage`
+  - `9026a8c78 feat(gateway): add Raft bundled platform plugin with activity hooks`
+  - `2a5e9d994 Merge pull request #48275 from NousResearch/feat/cron-scheduler-provider-chronos`
+  - `1928aa044 fix(managed-scope): honor managed scope in config→env bridges too`
+  - `b0e47a98f fix(managed-scope): honor managed scope in all standalone config loaders`
+  - `732293cf8 fix(managed-scope): apply managed layer in cli.py's standalone config loader`
+  - `9a24e41d0 docs: add managed scope admin guide + cross-link from configuration`
+  - `ddd519ea7 feat(managed-scope): surface managed scope in config show and doctor`
+  - `4f9e15df9 feat(managed-scope): guard writes to managed config/env keys`
+  - `81a663abe feat(managed-scope): apply managed .env last with override`
+  - `b5ddd6e71 feat(managed-scope): managed config layer wins over user config`
+  - `9cbcc0c9c feat(managed-scope): add managed_scope module (resolver, loaders, key helpers)`
+  - `bf9a0481f test(config): pin config/env load behavior before managed scope`
+  - `a58287afc Merge remote-tracking branch 'origin/main' into pr48275-rebase`
+  - `35e7ca03d fix(kanban): treat already-gone worker as terminated, not survived`
+  - `b9e521da2 fix(kanban): hold reclaim while the worker is still alive`
+  - `13d4b5fe2 fix(hindsight): align client version to 0.6.1 across all sources`
+  - `6c44471bf fix(hindsight): lazy-install cloud client dependency`
+  - `db744e7d1 feat(simplify-code): add risk-tiered application, Chesterton's Fence, slop + silent failure detection`
+  - `ba50e8656 fix: open dispatcher lock file with explicit utf-8 encoding`
+  - `226e9322e fix(kanban): cross-platform dispatcher lock + explicit release`
+  - `dfa561092 fix(kanban): machine-global singleton lock for the embedded dispatcher (#41448)`
+  - `a5e06078b fix(cron): compact cron failure messages + repair bare repo dirs after git gc`
+  - `195820874 chore(release): add Sahil-SS9 to AUTHOR_MAP for PRs #48466/#44919/#44909/#42209`
+  - `d7bff949a fix(cli): default cli_refresh_interval to 1.0 to keep status bar alive (#49087)`
+  - `2dd285f9b docs(gateway): document multiplexing opt-in + contract changes`
+  - `1e70df5fd feat(gateway): multiplex phase 4 — lifecycle guard + per-profile observability`
+  - `d5d02eabb feat(gateway): multiplex phase 3 — secondary-profile adapter registry + conflict detection`
+  - `f35abb122 feat(gateway): multiplex phase 1 — HTTP-inbound /p/<profile>/ routing (webhook)`
+  - `f538470cf feat(gateway): multiplex phase 2 — fail-closed profile credential isolation (Workstream A)`
+  - `d82f9fa7f feat(gateway): multiplex phase 0 — config flag, profile enumeration, profile-stamped session keys`
+  - `9e1f61613 fix(clarify): docstring — put options in choices[] only, never enumerate in question text`
+  - `df2420f57 fix(gateway): keep non-Discord home-channel startup send byte-identical`
+  - `caaa91628 fix(gateway): don't let delayed Discord status messages partition history backfill`
+  - `b936f92b2 fix(desktop): render send/prefill directive notices (/goal, /undo) (#49073)`
+  - `e00b96540 feat(tts): add xAI TTS speed and optimize_streaming_latency config knobs`
+  - `8b7c89bff feat(dashboard): session switcher panel on the Chat tab (#49077)`
+  - `06c7c2577 test(desktop): lock generic OAuth status fallthrough for catalog-only providers`
+  - `1d59d2dca feat(desktop): resolve OAuth status for catalog-only account providers`
+  - `d91b8d836 test(desktop): make keyVar a typed EnvVarInfo factory`
+  - `ee0de638d feat(desktop): add API-keys search; keep provider lists priority-sorted`
+  - `8fe7b52eb test(desktop): lock GUI⊇`hermes model` provider parity; surface Bedrock`
+  - `6cb04be77 feat(desktop): Keys tab groups by backend provider identity`
+  - `60dfa0f31 feat(desktop): Accounts tab derives membership from unified provider catalog`
+  - `3be1326f8 feat(desktop): /api/env derives provider key membership from unified catalog`
+  - `054b8c82f feat: unified provider_catalog() — one source for CLI picker and desktop tabs`
+  - `cb3d9038a Fix model picker and autorefresh on change`
+  - `4128c6979 chore: add carlos.dddo to AUTHOR_MAP`
+  - `8ae6bd082 test(tts): cover xAI auto speech-tags auxiliary rewrite path`
+  - `5a506da3d feat(tts): add auxiliary-model auto speech tags for xAI`
+  - `fad4b40d9 fix(model): persist /model switch by default across sessions`
+  - `1cc915763 test(cli): cover cli_refresh_interval default; map salvaged author`
+  - `c1ffd4c3b fix(cli): make refresh_interval configurable, default to 0 (disabled)`
+  - `01a6f1189 fix(debug): include gui.log (dashboard/TUI/pty/websocket) in hermes debug share`
+  - `ddca590ca chore: add Cdddo to AUTHOR_MAP`
+  - `160bb565b feat(tts): expose speaker_id on built-in Piper provider`
+  - `a7b4fbcbc fix(tui): guard /update against hosted dashboard mode`
+  - `9a2f2756f fix(desktop): allow selecting slash output and shell logs in thread (#49063)`
+  - `92451151c Revert "feat(skills): add html-artifact skill, fold in sketch + architecture-diagram + concept-diagrams (#48899)"`
+  - `9cd7b8ca4 Merge pull request #48950 from kshitijk4poor/salvage/dashboard-sessions-realtime`
+  - `b922d7dfb chore(release): add salesondemandio to AUTHOR_MAP for PR #42664`
+  - `715fa9ea1 fix(gateway): harden gateway command-line matcher (review findings)`
+  - `b12c0cd99 test(windows): run pytest-timeout in thread mode on Windows`
+  - `fd92a3a5c fix(gateway): Windows restart no longer causes a silent outage`
+  - `144834b2f test(gateway): real cached-agent max_iterations regression test`
+  - `ca92e9a36 fix(gateway): refresh cached agent max_iterations from current config`
+  - `dcac71952 test(gateway): cover runtime max_turns refresh`
+  - `460b1e50e fix(gateway): refresh max_turns before resolving runtime budget`
+  - `2c3aebcad fix(clarify): unwrap dict choices at the source so every surface gets clean text`
+  - `bce1e36b5 fix(discord): unwrap dict choices + soft-boundary truncate clarify buttons`
+  - `069011dd0 test(desktop): cover runtime->stored notification id resolution`
+  - `f9ffe0bc3 fix(desktop): resume stored session id on notification click`
+  - `ce0ac9bb4 Merge pull request #49000 from kshitijk4poor/salvage/session-title-lineage-48989`
+  - `8c70346e3 refactor(sessions): express compression-ancestor check as one recursive CTE`
+  - `65d050cf0 test(sessions): cover title reclaim across a compression lineage`
+  - `6ad0bc20f fix(sessions): let a compression continuation reclaim its base title`
+  - `46f9d5346 fix(agent): aggregate anthropic aux calls via stream`
+  - `f37bb21ff chore(dashboard): wire vitest into npm test script`
+  - `dc5cb0a44 fix(dashboard): refresh Sessions list in real time when new sessions are created`
+  - `5e93075fd Merge pull request #48982 from NousResearch/salvage/48965-tmux-fast-echo`
+  - `e52fffb60 harden(tui): also disable fast-echo for tmux-flavored TERM (SSH-from-tmux)`
+  - `ab8f06381 fix(tui): disable fast-echo bypass inside tmux to prevent cursor drift`
+  - `5378b9412 Merge pull request #48966 from kshitijk4poor/chore/authmap-tt-a1i`
+  - `fd27c9087 chore: add tt-a1i to AUTHOR_MAP`
+  - `df4ca2c5c Merge pull request #48953 from kshitijk4poor/salvage/issue-48848`
+  - `169952563 fix(tui): route pending-input commands via command.dispatch (#48848)`
+  - `db57a1a03 Merge pull request #48941 from kshitijk4poor/salvage-48887-backup-exclude-dirs`
+  - `e738c0833 fix(backup): exclude regeneratable dependency and cache dirs`
+  - `226ec2801 Merge pull request #48367 from kshitijk4poor/salvage-47289`
+  - `527a47f2f Merge pull request #48924 from kshitijk4poor/salvage-48894-structured-sync`
+  - `be2c2beb9 refactor(openviking): name tool_status constants and alias sets`
+  - `2d4046c6d refactor(openviking): reuse pre-scanned tool_input for pending tool calls`
+  - `27a6e188c refactor(openviking): derive recall-tool name set from canonical schemas`
+  - `3ca0ef7e3 fix(nix): hashless npm deps via importNpmLock (#48883)`
+  - `fcac0f94d fix(openviking): guard empty tool_id in batch skip set; reuse env_var_enabled`
+  - `9362ce257 feat(skills): add html-artifact skill, fold in sketch + architecture-diagram + concept-diagrams (#48899)`
+  - `5a856bdfa chore(release): add OpenViking contributor attribution`
+  - `3f0e9849e refactor(tui): reuse DASHBOARD_TUI_MODE for hosted /exit guard`
+  - `15e3b64b7 fix(tui): keep hosted dashboard chat alive on exit`
+  - `d7cd0bc08 fix(openviking): preserve structured sync attribution`
+  - `c7b7f92ec fix(openviking): sync structured turns with tool parts`
+  - `3485bc722 Merge pull request #48880 from kshitijk4poor/salvage-48824-slack-allowed-users`
+  - `1ab6f3479 refactor(dashboard): align Slack allowlist validation with gateway parse`
+  - `83c034bd5 fix(dashboard): accept Slack allow-all wildcard in allowed-users validation`
+  - `d9190491a Add Slack setup hints and field validation`
+  - `f741e7079 Add Slack allowed users setup field`
+  - `6278bca05 Merge pull request #48259 from NousResearch/fix/ns501-multipart-upload-salvage`
+  - `12dfcfdf7 fix(tui): restart dashboard chat on idle exit hotkeys`
+  - `a64fc490f fix(relay): make hosted gateways actually connect AND complete the inbound/outbound round-trip (#48828)`
+  - `245b95b09 fix(terminal): block gateway lifecycle commands from inside the gateway process`
+  - `637aff46e Merge remote-tracking branch 'origin/main' into hermes/hermes-6fe26723`
+  - `c34840e22 fix(cron): serve /api/cron/fire on the dashboard app (hosted-agent surface)`
+  - `d0622cafa refactor(agent): reuse hoisted summary in content-policy branch`
+  - `f18f31ebf test(agent): cover non-retryable error HTML summarization`
+  - `b892ee2bc fix(agent): summarize non-retryable API errors so raw HTML never leaks`
+  - `e1e53bff9 Merge remote-tracking branch 'origin/main' into hermes/hermes-6fe26723`
+  - `6752da9a7 fix(dashboard): clean up upload temp file on client disconnect + pin python-multipart (NS-501)`
+  - `28531b618 Merge remote-tracking branch 'origin/main' into hermes/hermes-6fe26723`
+  - `b75757d4a feat(cron): wire on_jobs_changed, cron.chronos config, docs + agent↔NAS contract`
+  - `3fc7b624d feat(cron,gateway): NAS-JWT fire verifier + /api/cron/fire webhook (Chronos)`
+  - `4c8bbe641 feat(cron): Chronos NAS-mediated managed-cron provider (scale-to-zero)`
+  - `b01eee0c7 feat(cron): store-level CAS claim for multi-machine at-most-once fire`
+  - `6ff5fd373 feat(cron): additive CronScheduler hooks (on_jobs_changed/fire_due/reconcile)`
+  - `58b19a4f6 refactor(cron): extract run_one_job shared firing helper from tick`
+  - `bfb6e0bb3 docs(cron): document CronScheduler provider + cron.provider key`
+  - `abbd8646e feat(gateway,desktop): start cron via resolved CronScheduler provider`
+  - `ae8fa1109 feat(cron): cron.provider config + plugins/cron discovery + resolver`
+  - `e6ff41ca9 feat(cron): CronScheduler ABC + InProcessCronScheduler (provider #1)`
+  - `a65739776 test(cron): characterize in-process + desktop ticker contract before provider refactor`
+- **Tests:** All fork tests passed
