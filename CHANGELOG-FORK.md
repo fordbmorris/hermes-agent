@@ -299,3 +299,221 @@
   - `e6ff41ca9 feat(cron): CronScheduler ABC + InProcessCronScheduler (provider #1)`
   - `a65739776 test(cron): characterize in-process + desktop ticker contract before provider refactor`
 - **Tests:** All fork tests passed
+
+### [2026-06-22] Merged upstream/main (213 commits)
+- **Status:** ✅ Merged and tested
+- **Upstream commits:**
+  - `5ff11a689 feat(cli): /timestamps command + timestamps in /history (#50506)`
+  - `b9b4756ab fix dashboard chat session titles`
+  - `5dae502b8 Address email pairing review feedback`
+  - `2455e1801 Make email pairing opt-in`
+  - `74f0dd62e feat(cli): Ctrl+G submits the edited draft on save (TUI parity) (#50560)`
+  - `4b09903de fix Nous auth refresh for idle agents`
+  - `b5bd66eac fix(telegram): observed/replied group docs of any type are cached too`
+  - `4314d451c fix(gateway): accept any inbound file type across all messaging platforms`
+  - `de6b3ae37 fix(terminal): bridge docker_extra_args to TERMINAL_DOCKER_EXTRA_ARGS in CLI + gateway (#50631)`
+  - `6202fdfc3 fix(container): detect dashboard role under s6-overlay v3 (#49196) (#50600)`
+  - `e448b2141 feat(dashboard): interactive auth setup on no-provider non-loopback bind (#50551)`
+  - `9e96e7099 feat(cli): /prompt — compose your next prompt in $EDITOR (#50509)`
+  - `95d53c3bc feat(cli): /reasoning full — show complete thinking, not 10-line clamp (#50499)`
+  - `b0a25980f fix(terminal): make hermes install dir reachable in subshell PATH (#50534)`
+  - `4c1934dd8 docs: repoint remaining stale gateway/platforms adapter refs to plugins/platforms`
+  - `0768ed3b3 docs(agents): fix stale platform adapter path in token-lock note`
+  - `7130d6086 feat(providers): remove google-gemini-cli + google-antigravity OAuth providers (#50492)`
+  - `5bf23ff25 fix(banner): don't advertise toolsets/skills the agent wasn't given (#50497)`
+  - `8cfcbd327 fix(process): SIGKILL the whole tree on escalation, not just wait_procs survivors`
+  - `8cbb34b2b chore: map tkwong co-author email for #15008 SIGKILL-escalation credit`
+  - `8cecaf0b2 feat(process): escalate SIGTERM->SIGKILL on host-pid termination after grace`
+  - `41fe086eb style(security-audit): add explicit encoding to read_text calls (ruff PLW1514)`
+  - `f45ace931 feat(security): startup security posture audit (warn-on-load)`
+  - `eb51c180e fix(docker): replace dashboard --insecure with basic-auth provider`
+  - `7726ce304 fix(security): close hermes-0day MCP-persistence attack surface`
+  - `9bf9a9f1f fix(swe-runner): move logging.basicConfig out of Runner __init__ into main`
+  - `0a7ae28eb fix(compressor): remove logging.basicConfig from library class __init__`
+  - `2b3a4f0af fix(agent): strip stale reasoning_content when falling back to a strict provider (#50480)`
+  - `73340d8be chore: add buihongduc132 to AUTHOR_MAP for mem0 salvage`
+  - `452a725ae fix(mem0): address PR review — restore docstrings, keep api_key required`
+  - `b6d2ac176 feat(mem0): add self-hosted support via MEM0_HOST / host config`
+  - `012f40c98 fix(status): cross-platform start-time fingerprint via psutil fallback`
+  - `1cefc2a24 test(whatsapp): fix port-spares-client test race (listen before announce + retry connect)`
+  - `0fb3b13b0 chore: add valentt to AUTHOR_MAP for #43846 salvage`
+  - `615a8e651 fix(whatsapp): add missing re import + fix test import path after adapter relocation`
+  - `069ab40c5 fix(whatsapp): only kill LISTENers when freeing the bridge port, never clients`
+  - `77fdbbfe8 fix(whatsapp): validate bridge PID identity before killing stale pidfile entry`
+  - `e44772314 fix(process-registry): re-validate PID identity before killing host processes`
+  - `84e1d31e5 refactor(kanban): fold worker/orchestrator skills into injected guidance (#50473)`
+  - `e5e258363 fix(desktop): relaunch on Linux after in-app update instead of hanging (#45205)`
+  - `1f6994d1e chore(release): add AUTHOR_MAP entry for #45205 salvage (EtherAura)`
+  - `1ec4fcf61 Merge pull request #50466 from NousResearch/bb/composer-popout-bounds`
+  - `13ce81190 fix: show desktop approval fallback (#46548)`
+  - `84fcbbf6a fix(security): quote HERMES_TIMEZONE in remote code execution to prevent shell injection`
+  - `bef1d3e4f fix(desktop): filter undefined entries in AttachmentList to prevent refText crash on session switch (#49624)`
+  - `16aeba170 fix(desktop): clamp composer peel-off under cursor`
+  - `c768c4b71 fix(antigravity): move model flow to model_setup_flows + stop bare-alias hijack`
+  - `37c37c9dc fix(antigravity): register google-antigravity ProviderProfile + AUTHOR_MAP`
+  - `b7a912ea4 fix(antigravity): bake in public OAuth client + default project fallback`
+  - `8baa4e997 feat(cli): add native Antigravity OAuth provider`
+  - `29176ffec test(gateway): cover no eager platform install on startup sweep`
+  - `242ec45f4 fix(gateway): don't lazy-install SDKs for unconfigured platforms on startup`
+  - `8fcb8136b fix(security): harden smart approval guard against prompt injection`
+  - `c11ae8261 fix(codex): seed app-server sessions with configured cwd`
+  - `7785655b4 fix(desktop): keep the floating composer in-bounds so it can't be lost off-screen`
+  - `745c4db23 feat(desktop/windows): show update-in-progress feedback before the desktop exits (#50419) (#50448)`
+  - `624580e83 fix(browser): verify daemon identity before orphan reaper kills a PID (#14073)`
+  - `4d4ba0831 refactor(session): simplify traversal guard to a helper + logger, harden non-leading separators`
+  - `aa2aac68b fix(V-009): reject Windows drive-letter paths in session field validation`
+  - `3a6a43cb8 fix(V-009): reject path traversal in SessionEntry.from_dict and harden _ensure_loaded`
+  - `c8eb7cf84 fix: V-009 security vulnerability`
+  - `bb59075b2 Merge pull request #50398 from helix4u/fix/windows-npm-path-fallback`
+  - `6f0ecf37d fix(redact): mask all Authorization schemes and x-api-key style headers`
+  - `87ab37338 test(url-safety): cover IPv6 scope-ID strip + fail-closed in URL guards`
+  - `ed966696e fix(security): handle IPv6 scope IDs in URL safety checks to prevent bypass`
+  - `b5b8a4cd5 fix(gateway): respect adapter decline of fresh-final to prevent double delivery`
+  - `f79e0a706 fix(email): mark missing-config as non-retryable + reject blank env vars (#40715)`
+  - `e921c4f82 chore(release): map devorun salvage author email`
+  - `b7f6cb9c8 fix(email): resolve IMAP/SMTP host from config and validate before connecting`
+  - `4cff0360e test(approval): regression for interrupt-unblocks-approval; AUTHOR_MAP`
+  - `a9c802598 fix(approval): honor interrupt in blocking gateway approval wait (#8697)`
+  - `824c9d381 fix(config): alias model.api_base -> model.base_url for custom providers (#50385)`
+  - `bb77a8b0d fix(gateway): respawn unmapped Windows gateways after update (#50090) (#50373)`
+  - `99f3072aa fix(model-switch): a failed in-place swap must be a no-op, not a dead session (#50375)`
+  - `ed3d12a76 fix(security): fail-closed when WebSocket peer is empty in loopback mode`
+  - `a4b1554c7 fix(whatsapp): normalize bare phone targets to JIDs before bridge send`
+  - `f72690825 fix(desktop/windows): stop in-app update from cascading into a backend restart loop (#50381)`
+  - `09a96ba0f fix(gateway): pause Telegram typing before stream finalize`
+  - `6902eb391 fix(cli): make ZIP-update directory replace atomic so it can't delete ui-tui`
+  - `db097fb08 fix(cli): auto-restore a deleted ui-tui workspace from git before TUI launch`
+  - `537ad9ea9 fix(cli): guard missing ui-tui workspace before TUI launch`
+  - `5b45fb269 fix(security): sanitize kanban markdown html`
+  - `7502d38bf fix(windows): prefer cmd npm shim on PATH fallback`
+  - `8e4d2fd23 docs(plugins): document acting from hooks via ctx.profile_name + dispatch_tool (#50352)`
+  - `b6f03ab89 docs(ui-tui): add billing.step_up.verification event + perfPane.tsx to README`
+  - `d7737bfd9 docs(ui-tui): fix file paths, add billing command, update file map`
+  - `d164ed032 fix(kanban): make reclaim claim-lock-aware to stop task/run status desync (#50366)`
+  - `87615f47b test(backup): add regression tests for restore_quick_snapshot path traversal`
+  - `ae4669990 fix(security): validate snapshot_id and file paths in restore_quick_snapshot to prevent path traversal`
+  - `1f4c5aed6 fix(kanban): honor kanban.auto_decompose toggle live, without a gateway restart (#50358)`
+  - `84ba83b09 fix(kanban): bound the cross-process init lock so connect() can't hang forever (#50353)`
+  - `9630ec6c1 fix(kanban): pin worker TERMINAL_CWD to the task workspace (#50348)`
+  - `b6d107240 fix(cli): branch new worktrees from the fresh remote tip, not stale local HEAD (#50355)`
+  - `e217fd42e feat(kanban): add task lifecycle plugin hooks (claimed/completed/blocked) (#50349)`
+  - `9d883ac90 feat(plugins): add ctx.profile_name for session-agnostic profile access (#50346)`
+  - `7d9f6a24f chore(release): add AUTHOR_MAP entry for #48678 salvage`
+  - `565b7c8d9 fix(telegram): stop typing indicator lingering after final reply`
+  - `c0409a87f feat(gateway): typed send-error classification (SendResult.error_kind) (#50342)`
+  - `6bbacc223 fix(desktop): make cold-start port-announcement deadline tolerant`
+  - `e580706d4 test(web_server): add integration tests for desktop boot handshake fix`
+  - `475e81dab fix(web_server): use run_in_executor for gateway pre-warm and drain-timeout`
+  - `5e3e89cc0 feat(hindsight): configurable embedded daemon health grace timeout (#50341)`
+  - `def3f6388 fix(file): anchor device symlink guard to task cwd`
+  - `e26723767 test(photon): cover overflow retry, typing cooldown, sidecar-crash detection`
+  - `9578e5279 fix(photon): detect unexpected sidecar death and trigger reconnect`
+  - `2a4542333 fix(photon): classify Envoy overflow errors as retryable; add typing cooldown`
+  - `7a131f7f4 fix(api-server): stop silently promising async delivery on stateless HTTP path (#50319)`
+  - `56255f83f fix(agent): stop delegate cascade from deleting the parent session`
+  - `e581740aa fix(kanban): single-writer dispatch lock to prevent orphan-dispatcher DB corruption (#50331)`
+  - `587b5b9ac fix(backup): capture memory-provider state stored outside HERMES_HOME (#50325)`
+  - `7a8c4fe23 chore(release): add AUTHOR_MAP entry for #48422 salvage`
+  - `6183e8ce1 fix(telegram): make Bot API 10.1 rich messages opt-in (default off)`
+  - `3b56d3a29 fix(security): redact secrets in kanban tool payloads before persistence`
+  - `d19aabbf2 fix(gateway): persist in-flight transcript on restart/shutdown drain timeout (#50312)`
+  - `93ea9b04a fix(gateway): cap inbound media download size to prevent memory exhaustion`
+  - `16899ae14 test(file): update guard assertions for unified display-text message`
+  - `71274f264 fix(file): reject read_file line-numbered writeback`
+  - `a18bae65b fix(config): redact api_key in config show/set output (#50245) (#50313)`
+  - `e0498bd30 fix(bedrock): price Claude prompt-cache tokens in /usage (#50307)`
+  - `7bc6f1806 fix(hindsight): skip local_embedded daemon when running as root`
+  - `d0de4601d fix(tui): /compress shows a before/after summary (#46686)`
+  - `9e4fe32d3 fix(session): opt the background-review fork out of session finalization`
+  - `b17180d95 fix(session): finalize owned SQLite session rows on AIAgent.close()`
+  - `41e0c10f7 fix(agent): route repeated-compression warning through _emit_status (#36908)`
+  - `3e354b61d fix(agent): preserve copilot routed headers`
+  - `b6a4638b6 fix(compressor): treat empty-content summary response as failure, not an empty summary (#50297)`
+  - `296b290f8 chore(release): add AUTHOR_MAP entry for de1tydev (#10158)`
+  - `41ba90f81 fix(process): keep CLI drain dedup after poll goes read-only (#10156)`
+  - `6f5f58e34 fix: keep poll read-only for notify_on_complete watcher`
+  - `9078b4bbd fix(file): harden read_file device alias blocking`
+  - `ea056b055 fix(telegram): avoid rich messages for CJK text`
+  - `65a477f12 feat(desktop): add Update now button to About panel (#50186)`
+  - `2f4f23fbf fix(codex): bridge app-server item/started events to Telegram tool-progress (#38835)`
+  - `8a506ed3a fix(auth): make load_pool() non-destructive for env-seeded credentials`
+  - `a96693239 fix(telegram): exempt tables from rich newline hard-breaks`
+  - `31e59fe44 fix(telegram): preserve newlines in rich slash-command output (#46070)`
+  - `03563daba fix(gateway): raise session-hygiene hard message limit 400 → 5000 (#50194)`
+  - `3509be712 fix(compression): auto-compression triggers at minimum context length (#14690)`
+  - `c6a092987 Merge pull request #50137 from NousResearch/fix/reset-calibration-on-model-switch`
+  - `ed8f7898b Merge pull request #50136 from NousResearch/fix/context-aware-tool-budget`
+  - `6984026f1 fix(browser): enable SSRF guard when terminal runs in container`
+  - `c7e8854cb fix(tui): persist session messages on force-quit / signal shutdown`
+  - `e499d69e3 feat(api-server): configurable concurrent-run cap to prevent DoS (#50007)`
+  - `99233faf7 fix(cli): persist sessions before shutdown`
+  - `9f67ba1b0 fix(agent): guard finalize_turn cleanup chain so it never drops the response (#50009)`
+  - `796f618f9 fix(telegram): keep chunk markers outside code fences`
+  - `1e0b3a2bc fix(agent): reset stale token calibration on model switch (#23767)`
+  - `1965d5621 fix(agent): scale tool-output budget to the model context window (#23767)`
+  - `5aec00f7a Merge pull request #50131 from kshitijk4poor/salvage/gateway-busy-readout-50103`
+  - `4d7bb382b refactor(gateway): route all active_agents coercion through parse_active_agents; harden drain-timeout fallback`
+  - `b577f2510 refactor(gateway): dedupe drain-timeout resolution + share active_agents parse`
+  - `0ee75469d feat(dashboard): surface gateway busy/drainable on /api/status`
+  - `51a338a1b feat(gateway): track active_agents in runtime status on turn boundaries`
+  - `44d552ea5 Merge pull request #50115 from NousResearch/salvage/model-switch-preflight-warning`
+  - `1ca29723f fix(cli): log instead of swallow preflight-warning errors; consistent TUI warning field`
+  - `04730f32e fix(cli): warn when in-session model switch will preflight-compress`
+  - `7b9a0b315 test(mcp): cover 'unknown method' ping keepalive fallback (#50028)`
+  - `472c06815 fix(mcp): detect 'unknown method' phrasing in ping keepalive fallback`
+  - `8ca38d312 Merge pull request #50100 from kshitijk4poor/salvage/model-visibility-cross-provider-47450`
+  - `461fcc096 test(desktop): harden model-visibility toggle + dedupe default expansion`
+  - `8666fd763 fix(desktop): preserve other providers' hide-all in model visibility dialog`
+  - `f57ff7aef Merge pull request #50034 from NousResearch/salvage/cron-tz-offset-repair`
+  - `f6a504d08 Merge pull request #50025 from NousResearch/salvage/cron-run-immediate`
+  - `3051a1634 Merge pull request #50023 from NousResearch/salvage/f3b-telegram-dmtopic`
+  - `f43c61643 chore(release): add devsart95 to AUTHOR_MAP`
+  - `4cc28aa3b fix(cron): route Telegram DM-topic cron delivery through DeliveryRouter (#22773)`
+  - `f1f36b3ba fix(cron): repair migrated cron timezone offsets to prevent double-fire`
+  - `02a3288de Merge pull request #50018 from NousResearch/salvage/f3a-delivery-confirm`
+  - `65d7c7faf fix(cron): execute job immediately on action='run'`
+  - `9f4c0b27c Merge pull request #50016 from NousResearch/salvage/cron-ticker-liveness`
+  - `d6cb69a7a chore: add sweetcornna to AUTHOR_MAP`
+  - `07424da76 fix(cron): keep ticker alive on BaseException + heartbeat-aware status`
+  - `d54890870 fix(cron): make live-adapter delivery confirmation reliable (#38922, #47056, #43014)`
+  - `35752fc3a chore: add szzhoujiarui-sketch and rayjun to AUTHOR_MAP`
+  - `73b92264e fix(cron): resolve model.default + fail fast on missing model`
+  - `14ef6312b fix(compression): decay protect_first_n so early turns don't fossilize (#11996)`
+  - `c6bf6bda9 fix(memory): recover from missing old_text on single-op replace/remove (#49997)`
+  - `d5f0e737d chore(release): add AUTHOR_MAP entry for #49544 salvage`
+  - `c1f11f8c6 fix(telegram): index streamed rich finals via editMessageText too`
+  - `29e5e127c fix(telegram): recover reply text from native rich echo`
+  - `fcdefb418 chore(release): add AUTHOR_MAP entries for docs PR salvage cluster 2`
+  - `2008a96b2 docs: align contributor test checklist with wrapper`
+  - `72e4cca00 docs(config): correct MCP docs path in cli-config.yaml.example`
+  - `b1ab5a8ae docs(antigravity-cli): add delegation patterns + output/bounding caveats`
+  - `9f507a0aa docs: remove file tools TBD placeholder`
+  - `225dcf855 docs(.env.example): add HF_BASE_URL placeholder`
+  - `85f108ef0 test(cron): document consent-first self-learning suggestions`
+  - `bc85f6150 docs: document per-event extra keys in shell-hook wire protocol`
+  - `c02648c5d fix(docs): align slash-command and docker docs`
+  - `98ecd0bee docs(mcp): fix stale ~0.75s discovery-wait reference in late-refresh docstring`
+  - `b337afdf6 docs(cli): fix broken terminal-backend guide link in setup wizard`
+  - `defeda8c5 docs: sync documentation with current implementation`
+  - `95d970a75 docs: sharpen software-development skills`
+  - `74b5cc7ca docs(spotify): document 6-month re-auth cycle and add client-level invalid_grant test`
+  - `9bd5003d4 fix(spotify): quarantine dead tokens on terminal refresh failure`
+  - `242962e1f docs(providers): clarify vllm qwen reasoning output`
+  - `fe5c8d231 fix(docs): document curl, xz-utils, and g++ as Linux prerequisites`
+  - `fa53e3643 docs(hooks): document manual shell hook allowlisting`
+  - `f80088f03 docs: add missing Prerequisites/How to Run sections to SKILL.md template`
+  - `eec9c1d84 docs(agents): clarify background delegation durability`
+  - `063155e23 docs(hooks): document subagent_start plugin hook`
+  - `df4015bbc docs: session lifecycle documentation`
+  - `2609bcccc feat(i18n): add complete Spanish translation`
+  - `38756f2d5 docs(docker): document gateway tool-loop hard stops`
+  - `cc30e0b65 docs(config): document auxiliary task fallback_chain`
+  - `5eb158e31 docs(hermes-agent skill): document project context files and their discovery rules`
+  - `97563ab82 fix: warn on line-oriented newline search patterns`
+  - `eb9a00228 docs: clarify search_files newline regex behavior`
+  - `6403ed06b docs(session-search): document source-first retrieval limits`
+  - `1eb295930 docs(.env.example): add missing ELEVENLABS_API_KEY placeholder`
+  - `46cc0345a docs(skills): add hermes-agent verification rule`
+  - `8ac5e90ec fix(gateway): dedup image_generate media across the compression boundary`
+  - `1f874dfe4 fix(compression): stop fallback summary triplicating the latest user ask`
+- **Tests:** All fork tests passed
