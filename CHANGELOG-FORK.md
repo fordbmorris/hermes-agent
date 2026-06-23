@@ -524,3 +524,121 @@
   - `8ac5e90ec fix(gateway): dedup image_generate media across the compression boundary`
   - `1f874dfe4 fix(compression): stop fallback summary triplicating the latest user ask`
 - **Tests:** All fork tests passed
+
+### [2026-06-23] Merged upstream/main (113 commits)
+- **Status:** ✅ Merged and tested
+- **Upstream commits:**
+  - `bb7ff7dc3 revert(cron): return cron job storage to per-profile (reverts #32117 + #50993) (#51116)`
+  - `2a10b8384 Merge pull request #51103 from NousResearch/bb/desktop-tool-preview-cleanup`
+  - `7daa6d83f style(desktop): soften inline code and expanded tool chrome`
+  - `48a8f8416 fix(desktop): toggle preview rail and open in browser`
+  - `d0af7fc95 feat(desktop): detect tool previews into composer status stack`
+  - `cb17a9efb fix(desktop): stop auto-opening tool previews`
+  - `ba9e3a491 feat(memory): Honcho OAuth connect — desktop and CLI flows + token refresh (#44335)`
+  - `672ea1f89 Merge pull request #50994 from NousResearch/hermes/hermes-9fb04abd`
+  - `833710d33 Merge remote-tracking branch 'origin/main' into pr-50994`
+  - `116331dd3 Merge pull request #51094 from NousResearch/bb/desktop-thread-timeline`
+  - `760fd9513 Merge pull request #51078 from NousResearch/bb/fix-vision-capture`
+  - `6780cee67 Merge pull request #51072 from NousResearch/bb/desktop-computer-use`
+  - `3fffecbda feat(desktop): add timeline rail for long chat threads`
+  - `9bacd7d4b Merge pull request #51096 from NousResearch/bb/desktop-oversized-image-replay`
+  - `b90f1e4ac Merge pull request #51093 from NousResearch/bb/desktop-string-stack-overflow`
+  - `88e136448 fix(agent): shrink anthropic-native image history`
+  - `a6b670d4a fix(desktop): avoid stack overflow on embedded image replay`
+  - `3c1058e2e fix(computer-use): set stdin=DEVNULL on cua-driver subprocess calls`
+  - `2dfcead68 feat(computer-use): make the preflight cross-platform (win/linux)`
+  - `807b69629 fix(computer-use): vision capture returns an image on cua-driver >=0.5.x`
+  - `0223ea5f5 feat(computer-use): surface macOS permission preflight in the desktop`
+  - `87c4a5ebb feat(background-review): aux-model selector for the self-improvement review (#49252)`
+  - `660e36f09 fix(cron): scope job execution to its owning profile (#32091 follow-up) (#50993)`
+  - `15880da8b fix(file_tools): resolve tilde using profile home for file operations (#48552)`
+  - `c080b2dc3 fix(gateway): redact credentials from TUI approval prompts (#48456)`
+  - `0e69cd4b3 fix(memory): honor configured char limits in the no-agent on-disk store`
+  - `3147cbb13 fix(memory): apply /memory approve against a fresh store when no live agent`
+  - `100e7be20 fix(security): deny root-level credential stores in media delivery`
+  - `e9b86f352 fix(discord): delete obsolete slash commands before creating new ones`
+  - `91c465f6e test(discord): add regression test for 100-command sync limit`
+  - `ae7e85742 fix(cron): deliver max-iteration fallback reports`
+  - `397270142 fix(agent): complete final text on last turn`
+  - `0f741cef2 fix(tests): update cua install tests for cross-platform support`
+  - `5f1d23cfb fix(computer-use): delete broken pre-install asset probe; trust the upstream installer`
+  - `f721d2cda fix(image/video gen): make schema delivery instruction platform-neutral (#51031)`
+  - `2a58fee1a fix(api): allow dashboard updates for git checkouts in containers (#51005)`
+  - `6681f28d5 fix(telegram): disable DM topic mode when last binding is pruned`
+  - `11246dbe2 tests: regression coverage for stale topic-binding prune (#31501)`
+  - `142a5751a gateway/telegram: prune stale DM topic binding on Thread-not-found (#31501)`
+  - `4849a8e55 hermes_state: add SessionDB.delete_telegram_topic_binding (#31501)`
+  - `30e5d0092 feat(computer-use): add whole-screen/desktop capture target`
+  - `525033586 fix(computer-use): route CuaDriver vision capture via get_window_state`
+  - `2ba1cfeb2 feat(goals): completion contracts for /goal — evidence-based judging (#50501)`
+  - `ff08e60c6 feat(skills): add cloudflare-temporary-deploy optional skill (#50849)`
+  - `7dece1d93 Merge pull request #50977 from NousResearch/bb/composer-fixed-portal`
+  - `de7ad8b78 fix(desktop): guarantee out-of-bounds composer is reclamped on load`
+  - `ea5fa505d fix(desktop): clamp floating composer to the thread area, not the whole window`
+  - `aff5ae692 fix(desktop): move composer out of contain wrapper instead of portaling`
+  - `79f270f54 fix(desktop): portal floating composer to body so it can't be clipped off-screen`
+  - `5937b9519 Merge pull request #50773 from NousResearch/salvage/43719-dashboard-plugin-rce`
+  - `e2bea0abe refactor(security): centralize non-bundled plugin sources in one constant`
+  - `f1e6d39a7 feat(computer_use): disable cua-driver telemetry by default, add opt-in (#50842)`
+  - `ed711e1c2 chore: add iaji to AUTHOR_MAP for salvaged Slack mention_patterns fix`
+  - `441bd6d8d fix(slack): split csv mention pattern fallback`
+  - `496626876 fix(slack): honor documented `mention_patterns` wake words`
+  - `261794639 fix(delegation): emit high-concurrency cost warning once per process (#50848)`
+  - `b1b20270c refactor(memory): move write-mirror gating behind MemoryManager interface`
+  - `027cb649e fix(memory): fail closed on unclear write results`
+  - `c7e0501e9 fix(openviking): drain memory mirror workers on shutdown`
+  - `70e7132e2 fix(openviking): gate memory writes and add viking_forget`
+  - `38c56a1e8 fix(computer_use): probe cua-driver-rs release tag, not monorepo releases/latest`
+  - `e3505c7f7 fix(computer_use): reconcile Linux gate with stale "gated off" comments`
+  - `f2e37549c feat(computer_use): cross-platform cua-driver (macOS/Windows/Linux)`
+  - `17dfc6bec fix(desktop): set AppUserModelID on Windows so notifications fire (#50808)`
+  - `ff85af3fc feat(goals): /goal wait <pid> — park the loop on a background process (#50503)`
+  - `d4fa2db1c fix(desktop): show all of a provider's models when searching the composer picker`
+  - `a6ce9b2fb fix(picker): keep flat-namespace reseller first-party models in desktop picker`
+  - `ef6492b64 fix(gateway): cold-start installed Windows gateway after update when none was running (#50804)`
+  - `da498ed99 chore(release): map ScotterMonk for PR #50145 salvage`
+  - `e9cd8c5bf fix(delivery): drop env-var knob, flag all chunking adapters`
+  - `86e4521cb fix(delivery): make cron output truncation configurable + adapter-aware`
+  - `eecb5b9dd fix(update): don't count across shallow-clone boundary (bogus '12492 commits behind') (#50784)`
+  - `2e779d11a feat(mem0): v3 API, OSS mode, update/delete tools, telemetry & review fixes (#15624)`
+  - `8845f3316 fix(security): restrict dashboard plugin backend import to bundled plugins (#43719)`
+  - `a904ff172 Merge pull request #50781 from NousResearch/salvage/output-token-reservation-threshold`
+  - `623b21bf2 fix(compress): reserve output tokens in the compaction threshold (#23767, #43547)`
+  - `75a70d98f feat(relay): forward a stable instance id at self-provision (Phase 6 Unit α) (#50772)`
+  - `065946d84 Merge pull request #50762 from NousResearch/salvage/defer-preflight-after-compaction`
+  - `1f28b1a9b fix(gateway): redact credentials from approval prompts before sending to clients (#48456) (#50767)`
+  - `b2c84a162 fix(agent): defer preflight compaction until real usage after a compaction (#23767, #36718)`
+  - `b4cb33cd4 chore(release): map basilalshukaili@gmail.com in AUTHOR_MAP`
+  - `72f75f845 fix(compressor): count tool_call envelope in tail-budget token estimate (#28053)`
+  - `0e87c0a41 Merge pull request #50117 from NousResearch/salvage/f5-cron-mcp-per-job`
+  - `aa83213c5 Merge pull request #50740 from NousResearch/salvage/preflight-token-progress`
+  - `21541ce6e Merge pull request #50108 from NousResearch/salvage/f4m1-anthropic-pool`
+  - `5bd3dae9e chore(release): add sherman-yang to AUTHOR_MAP`
+  - `74a5905ae fix(cron): layer enabled MCP servers onto per-job enabled_toolsets`
+  - `04a1d9efd feat(desktop): PR-style file diffs in chat (#50731)`
+  - `b9f302441 Merge pull request #50112 from NousResearch/salvage/f5-cron-storage-root`
+  - `69de0360a fix(agent): align preflight token-progress floor to 5% (#23767, #39548)`
+  - `f509d6533 Merge pull request #50109 from NousResearch/salvage/f5-disabled-bundle-core`
+  - `2649f7360 Merge pull request #50062 from NousResearch/salvage/cron-missed-grace-runonce`
+  - `3545d2942 refactor(auth): drop dead select() fallback in anthropic pool resolver`
+  - `b08ee8ad0 fix(agent): count tokens, not just rows, as preflight compression progress`
+  - `61c266b0d style(desktop): soften dark-mode syntax highlighting`
+  - `33efff0d8 Merge pull request #50726 from NousResearch/salvage/compression-token-progress`
+  - `64a507da4 feat(relay): handle passthrough_forward over the WS (Phase 5 §5.1, gateway half) (#50702)`
+  - `ac128af1c feat(desktop): syntax-highlight inline diffs via Shiki`
+  - `c6fbd5a10 style(desktop): lead --dt-font-mono with bundled JetBrains Mono`
+  - `a61baa961 feat(desktop): PR-style file diffs in chat`
+  - `ebd38e128 test(agent): regression for token-only compression progress (#39550, #23767)`
+  - `87b60ae49 no-mistakes(review): guard token-delta status msg on actual compression in overflow handler`
+  - `47b6b4cf8 fix #39550: detect token-only compression success`
+  - `ab22317d0 Merge pull request #50214 from kshitijk4poor/salvage/desktop-rename-branched-50143`
+  - `ed81f0b63 fix(desktop): log session.title RPC failure before REST fallback`
+  - `7f4337893 test(desktop): cover renameSessionPreferringRpc routing`
+  - `0e47f68a4 fix(desktop): rename branched session via session.title RPC`
+  - `fb3d31ba8 feat(desktop): add Update now button to About panel`
+  - `55ac5c026 chore(release): add mohamedorigami-jpg to AUTHOR_MAP`
+  - `a5c09fd17 fix(cron): anchor cron storage at the default root home (not the active profile)`
+  - `dd042fc4d fix(tools): preserve core tools when a platform bundle is disabled`
+  - `346318851 fix(auth): honor anthropic credential pool oauth`
+  - `6777a6bd6 fix(cron): run missed-grace jobs once instead of deferring forever`
+- **Tests:** All fork tests passed
