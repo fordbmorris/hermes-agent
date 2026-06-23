@@ -16,6 +16,7 @@ Improvements over v2:
   - Richer tool call/result detail in summarizer input
 """
 
+import concurrent.futures
 import hashlib
 import json
 import logging
@@ -167,6 +168,49 @@ _SUMMARY_FAILURE_COOLDOWN_SECONDS = 600
 # only meant to preserve continuity anchors from the dropped window, not to
 # become another unbounded transcript copy after the LLM summarizer failed.
 _FALLBACK_SUMMARY_MAX_CHARS = 8_000
+# Chunking configuration for parallel compression
+_CHUNK_TARGET_TOKENS = 150_000      # target tokens per chunk for aux model
+_CHUNK_SINGLE_TURN_MAX = 200_000    # max tokens for a single turn before fragmenting
+_CHUNK_OVERHEAD_TOKENS = 5000       # instruction prompt overhead (preamble + template)
+_CHUNK_MAX_WORKERS = 8              # max parallel LLM calls for chunking
+
+def _estimate_chunk_tokens(turns, target=_CHUNK_TARGET_TOKENS, max_turn=_CHUNK_SINGLE_TURN_MAX):
+    """Split turn list into chunks targeting ~target tokens per chunk at turn boundaries."""
+    if not turns:
+        return [turns]
+    per_turn = []
+    for t in turns:
+        c_len = len(t.get("content") or "")
+        tool_calls = t.get("tool_calls") or []
+        args_len = 0
+        for tc in tool_calls:
+            if isinstance(tc, dict):
+                fn = tc.get("function", {})
+            else:
+                fn = getattr(tc, "function", None) or {}
+            if isinstance(fn, dict):
+                args_len += len(str(fn.get("arguments", "")))
+            else:
+                args_len += len(str(getattr(fn, "arguments", "")))
+        per_turn.append((c_len + args_len) // 4 + 20)
+    chunks, cur, cur_total = [], [], 0
+    for t, est in zip(turns, per_turn):
+        if est > max_turn:
+            if cur:
+                chunks.append(cur)
+                cur, cur_total = [], 0
+            chunks.append([t])
+            continue
+        if cur_total + est > target and cur:
+            chunks.append(cur)
+            cur, cur_total = [t], est
+        else:
+            cur.append(t)
+            cur_total += est
+    if cur:
+        chunks.append(cur)
+    return chunks
+
 _FALLBACK_TURN_MAX_CHARS = 700
 _AUTO_FOCUS_MAX_TURNS = 3
 _AUTO_FOCUS_TURN_MAX_CHARS = 260
@@ -1371,6 +1415,143 @@ Summary generation was unavailable, so this is a best-effort deterministic fallb
         self.summary_model = ""  # empty = use main model
         self._summary_failure_cooldown_until = 0.0  # no cooldown — retry immediately
 
+    def _summarize_chunked(
+        self,
+        turns_to_summarize,
+        focus_topic=None,
+    ):
+        """Parallel chunked summarization for large turn sets.
+
+        Splits turns into ~150K token chunks, runs each through the
+        aux model in parallel, stitches results. Single-turn fragments
+        get a combine pass; normal multi-turn chunks just concatenate.
+        """
+        chunks = _estimate_chunk_tokens(turns_to_summarize)
+        if len(chunks) <= 1:
+            logger.debug("Chunked compression collapsed to single chunk")
+            return self._generate_summary(turns_to_summarize, focus_topic)
+
+        logger.info("Chunked compression: %d chunks from %d turns",
+                    len(chunks), len(turns_to_summarize))
+
+        def _summarize_one(idx, chunk):
+            """Summarize a single chunk with a fresh prompt (no iterative update)."""
+            try:
+                chunk_content = self._serialize_for_summary(chunk)
+                if not chunk_content.strip():
+                    return None
+                prompt = (
+                    "You are a summarization agent creating a context checkpoint. "
+                    "Produce only the structured summary; do not add a greeting or preamble. "
+                    "NEVER include API keys, tokens, passwords, or credentials - replace with [REDACTED].\n\n"
+                    f"{chunk_content}\n\n"
+                    "Use this structure:\n"
+                    "## Historical Task Snapshot\n"
+                    "[The user's most recent unfulfilled input verbatim]\n"
+                    "## Goal\n## Completed Actions (numbered, with tool used)\n"
+                    "## Active State\n## Blocked\n## Key Decisions\n## Relevant Files"
+                )
+                kw = {
+                    "task": "compression",
+                    "main_runtime": {
+                        "model": self.model, "provider": self.provider,
+                        "base_url": self.base_url, "api_key": self.api_key,
+                        "api_mode": self.api_mode,
+                    },
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 8000,
+                }
+                if self.summary_model:
+                    kw["model"] = self.summary_model
+                with aux_interrupt_protection():
+                    resp = call_llm(**kw)
+                text = resp.choices[0].message.content
+                if isinstance(text, str) and text.strip():
+                    return redact_sensitive_text(text.strip())
+            except Exception as e:
+                logger.warning("Chunk %d failed: %s", idx, e)
+            return None
+
+        with concurrent.futures.ThreadPoolExecutor(
+            max_workers=min(len(chunks), _CHUNK_MAX_WORKERS)
+        ) as pool:
+            fut_map = {pool.submit(_summarize_one, i, c): i for i, c in enumerate(chunks)}
+            results = {}
+            has_fragments = False
+            for f in concurrent.futures.as_completed(fut_map):
+                idx = fut_map[f]
+                try:
+                    r = f.result()
+                    results[idx] = r
+                except Exception as e:
+                    logger.error("Chunk %d thread raised: %s", idx, e)
+                    results[idx] = None
+
+        ordered = [(i, results[i]) for i in sorted(results) if results[i] is not None]
+        if not ordered:
+            logger.warning("All chunks failed; falling back to single-shot")
+            return self._generate_summary(turns_to_summarize, focus_topic)
+
+        # Check if any chunk was a single-turn fragment
+        for idx, _ in ordered:
+            for t in chunks[idx]:
+                if len(str(t.get("content", ""))) // 4 > _CHUNK_SINGLE_TURN_MAX:
+                    has_fragments = True
+                    break
+
+        if has_fragments:
+            frag_text = "\n\n---\n\n".join(s for _, s in ordered)
+            return self._combine_summary_fragments(frag_text)
+
+        parts = []
+        for i, (idx, text) in enumerate(ordered):
+            if len(ordered) > 1:
+                parts.append(f"--- Chunk {i+1}/{len(ordered)} ---\n{text}")
+            else:
+                parts.append(text)
+        stitched = "\n\n".join(parts)
+        self._previous_summary = stitched
+        self._summary_failure_cooldown_until = 0.0
+        self._summary_model_fallen_back = False
+        self._last_summary_error = None
+        self._last_summary_auth_failure = False
+        return self._with_summary_prefix(stitched)
+
+    def _combine_summary_fragments(self, stitched):
+        """Combine fragment summaries from a single oversized turn."""
+        prompt = (
+            "You are merging fragment summaries of a single conversation turn "
+            "that was split because it contained too much content. "
+            "Combine them into ONE coherent summary section. "
+            "Remove redundancy, merge timelines. "
+            "Preserve all specific details (file paths, commands, errors).\n\n"
+            f"{stitched}\n\n"
+            "Return only the combined summary with no preamble."
+        )
+        try:
+            kw = {
+                "task": "compression",
+                "main_runtime": {
+                    "model": self.model, "provider": self.provider,
+                    "base_url": self.base_url, "api_key": self.api_key,
+                    "api_mode": self.api_mode,
+                },
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 4000,
+            }
+            if self.summary_model:
+                kw["model"] = self.summary_model
+            with aux_interrupt_protection():
+                resp = call_llm(**kw)
+            result = resp.choices[0].message.content
+            if isinstance(result, str) and result.strip():
+                r = redact_sensitive_text(result.strip())
+                self._previous_summary = r
+                return self._with_summary_prefix(r)
+        except Exception as e:
+            logger.warning("Fragment combine failed, using stitched: %s", e)
+        return self._with_summary_prefix(stitched)
+
     def _generate_summary(
         self,
         turns_to_summarize: List[Dict[str, Any]],
@@ -1403,6 +1584,18 @@ Summary generation was unavailable, so this is a best-effort deterministic fallb
 
         summary_budget = self._compute_summary_budget(turns_to_summarize)
         content_to_summarize = self._serialize_for_summary(turns_to_summarize)
+
+        # Check if content exceeds chunking threshold for parallel summarization
+        _est_content_tokens = len(content_to_summarize) // 4
+        _prev_sum_tokens = (len(self._previous_summary) // 4) if self._previous_summary else 0
+        _est_total = _est_content_tokens + _prev_sum_tokens + _CHUNK_OVERHEAD_TOKENS
+
+        if _est_total > _CHUNK_TARGET_TOKENS and len(turns_to_summarize) > 1:
+            logger.info(
+                "Content ~%d tokens > chunk target %d (%d turns). Using parallel chunks.",
+                _est_total, _CHUNK_TARGET_TOKENS, len(turns_to_summarize),
+            )
+            return self._summarize_chunked(turns_to_summarize, focus_topic)
 
         # Current date for temporal anchoring (see ## Temporal Anchoring below).
         # Date-only granularity matches system_prompt.py:337 (PR #20451) and the

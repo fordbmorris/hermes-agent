@@ -2,6 +2,13 @@
 
 ## Custom Changes
 
+### [2026-06-23] Parallel Chunked Compression + Delegation effort_mapping
+- **Commits:** (pending — staged in this sync run)
+- **Files:** `agent/context_compressor.py`, `tools/delegate_tool.py`
+- **Description:** Added parallel chunked summarization for large context windows (`_summarize_chunked`, `_combine_summary_fragments`, `_estimate_chunk_tokens`) that splits oversized turn sets into ~150K token chunks and processes them concurrently via ThreadPoolExecutor. Added `effort_mapping` support in delegation config to map reasoning effort levels to specific child models/providers/base_urls/api_keys.
+- **Tests:** `tests/fork/test_fork_chunked_compression.py`, `tests/fork/test_fork_effort_mapping.py`
+- **Status:** ✅ Active
+
 ### [2026-06-18] Per-Subagent Reasoning Effort + Config Write Bypass
 - **Commit:** `39c841f01`
 - **Files:** `providers/base.py`, `tools/delegate_tool.py`, `tools/file_tools.py`

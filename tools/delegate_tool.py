@@ -1196,6 +1196,44 @@ def _build_child_agent(
     except Exception as exc:
         logger.debug("Could not load delegation reasoning_effort: %s", exc)
 
+    # ── Effort→model mapping (delegation.effort_mapping) ──────────────
+    # When the delegation config includes an effort_mapping dict, look up
+    # the resolved effort level and override the child's model/provider/
+    # base_url/api_key accordingly.  Unknown or unrecognized effort keys
+    # fall through to the delegation defaults (e.g. Qwen3.6 thinking ON).
+    # The extra_body from the mapping entry is injected via request_overrides.
+    effort_mapping = delegation_cfg.get("effort_mapping", {}) or {}
+    child_request_overrides = None
+    child_credential_override = False
+    if isinstance(effort_mapping, dict) and effort_mapping:
+        _effort_key = (reasoning_effort or delegation_effort or "").strip().lower()
+        if _effort_key in effort_mapping:
+            entry = effort_mapping[_effort_key]
+            if isinstance(entry, dict):
+                _em_model = entry.get("model")
+                _em_provider = entry.get("provider")
+                _em_base_url = entry.get("base_url")
+                _em_api_key = entry.get("api_key")
+                _em_extra_body = entry.get("extra_body")
+                if _em_model:
+                    effective_model = str(_em_model)
+                if _em_provider:
+                    effective_provider = str(_em_provider)
+                    child_credential_override = True
+                if _em_base_url:
+                    effective_base_url = str(_em_base_url)
+                if _em_api_key:
+                    effective_api_key = str(_em_api_key)
+                if isinstance(_em_extra_body, dict) and _em_extra_body:
+                    child_request_overrides = {"extra_body": dict(_em_extra_body)}
+                if child_credential_override:
+                    # Clear parent-level provider filters so the overridden
+                    # provider is honoured (same pattern as override_provider)
+                    child_providers_allowed = None
+                    child_providers_ignored = None
+                    child_providers_order = None
+                    child_provider_sort = None
+
     # Inherit the parent's fallback provider chain so subagents can recover
     # from rate-limits and credential exhaustion exactly like the top-level
     # agent does.  _fallback_chain is a list accepted by AIAgent's
@@ -1234,6 +1272,7 @@ def _build_child_agent(
         max_iterations=max_iterations,
         max_tokens=getattr(parent_agent, "max_tokens", None),
         reasoning_config=child_reasoning,
+        request_overrides=child_request_overrides,
         prefill_messages=getattr(parent_agent, "prefill_messages", None),
         fallback_model=parent_fallback,
         enabled_toolsets=child_toolsets,
